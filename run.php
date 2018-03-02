@@ -1,11 +1,20 @@
 <?php
 
-require_once 'Publication.php';
+// require_once 'Publication.php';
+require_once 'News.php';
 
-$publ1 = new Publication('Публикация 1');
+$n = new News('Новость 1', 'Пришла весна.');
+$n1 = new News('Новость 2', 'Пришла весна.');
 
-$publ2 = new Publication();
-$publ2->title = 'Публикация 2';
+echo $n->title . "\n";
+echo $n1->title . "\n";
 
-$publ1->print();
-$publ2->print();
+// $n->print();
+
+// $publ1 = new Publication('Публикация 1');
+
+// $publ2 = new Publication();
+// $publ2->title = 'Публикация 2';
+
+// $publ1->print();
+// $publ2->print();

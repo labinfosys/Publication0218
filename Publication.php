@@ -7,10 +7,11 @@ class Publication
     public $author;
     public $date;
 
-    public function __construct($title = '', $content = '') 
+    public function __construct($title, $content, $date) 
     {
         $this->title = $title;
         $this->content = $content;
+        $this->date = $date;
     }
 
     public function print() 
