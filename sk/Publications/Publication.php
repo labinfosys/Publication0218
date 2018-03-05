@@ -3,6 +3,8 @@ namespace sk\Publications;
 
 class Publication 
 {
+    static public $type = 'PUBL';
+
     public $title;
     public $content;
     public $author;
@@ -18,5 +20,11 @@ class Publication
     public function print() 
     {
         echo $this->title . "\n";
+    }
+
+    static public function create()
+    {
+        $p = new Publication('Автопубликация', 'Контент', date('d.m.Y'));
+        return $p;
     }
 }

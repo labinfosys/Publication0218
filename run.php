@@ -10,13 +10,14 @@ function my_autoload($className)
 }
 spl_autoload_register('my_autoload');
 
-// require_once 'Publication.php';
-// require_once 'News.php';
-
 use sk\Publications\News;
+use sk\Publications\Publication;
 
-$n  = new News('Новость 1', 'Пришла весна.');
-// $n1 = new Article('Новость 2', 'Пришла весна.');
 
-echo $n->title . "\n";
+Publication::create()->print();
+
+// echo "\n";
+
+// $n  = new News('Новость 1', 'Пришла весна.');
+// echo $n->title . "\n";
 // echo $n1->title . "\n";
