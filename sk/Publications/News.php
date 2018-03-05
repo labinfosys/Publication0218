@@ -1,5 +1,5 @@
 <?php
-require_once 'Publication.php';
+namespace sk\Publications;
 
 class News extends Publication
 {

@@ -1,4 +1,5 @@
 <?php
+namespace sk\Publications;
 
 class Publication 
 {
