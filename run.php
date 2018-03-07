@@ -13,11 +13,17 @@ spl_autoload_register('my_autoload');
 use sk\Publications\News;
 use sk\Publications\Publication;
 
+$db = new PDO('mysql:host=localhost;dbname=php02', 'root', '');
 
-Publication::create()->print();
+$news = News::get($db, 4);
 
-// echo "\n";
+$news->title = $news->title . ' #4';
+$news->save();
+$news->print();
 
-// $n  = new News('Новость 1', 'Пришла весна.');
-// echo $n->title . "\n";
-// echo $n1->title . "\n";
+// $n1 = new News($db);
+// $n1->title = 'Ручная новость';
+// $n1->content = 'Ручная новость';
+// $n1->date = date('Y-m-d');
+// $n1->save();
+// $n1->print();
