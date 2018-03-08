@@ -15,15 +15,14 @@ use sk\Publications\Publication;
 
 $db = new PDO('mysql:host=localhost;dbname=php02', 'root', '');
 
-$news = News::get($db, 4);
-
-$news->title = $news->title . ' #4';
+$news = News::get($db, 1);
+$news->title = $news->title . ' #1';
 $news->save();
 $news->print();
 
-// $n1 = new News($db);
-// $n1->title = 'Ручная новость';
-// $n1->content = 'Ручная новость';
-// $n1->date = date('Y-m-d');
-// $n1->save();
-// $n1->print();
+$n1 = new News($db);
+$n1->title = 'Ручная новость';
+$n1->content = 'Ручная новость';
+$n1->news_date = date('Y-m-d');
+$n1->save();
+$n1->print();

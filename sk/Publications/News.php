@@ -4,8 +4,7 @@ namespace sk\Publications;
 class News extends ActiveRecord
 {
     static public $type = 'NEWS';
-    static protected $table = 'news';
-    private $field = ['title', 'content', 'news_date'];
+    public $table = 'news';
 
     public function print()
     {

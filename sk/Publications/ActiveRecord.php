@@ -3,9 +3,9 @@ namespace sk\Publications;
 
 class ActiveRecord 
 {
-    static protected $table = 'news';
     public $db;
     public $attributes;
+    public $table;
 
     public function __construct($db) 
     {
@@ -26,16 +26,14 @@ class ActiveRecord
 
     static public function get($db, $id)
     {
-        $sql = "select * from " . self::$table . " where id = $id";
+        $obj = new News($db);
+        $sql = "select * from " . $obj->table . " where id = $id";
         $result = [];
-        foreach($db->query($sql) as $row) {
+        foreach($db->query($sql, \PDO::FETCH_ASSOC) as $row) {
             $result = $row;
         }
-        $obj = new News($db);
-        $obj->id = $result['id'];
-        $obj->title = $result['title'];
-        $obj->content = $result['content'];
-        $obj->date = $result['news_date'];
+        if (empty($result)) return null;
+        $obj->attributes = $result;
         return $obj;
     }
 
@@ -50,24 +48,19 @@ class ActiveRecord
 
     protected function update()
     {
-        $fields = '';
-        foreach($this->fields as $field) {
-            $fields .= " {$field} = '" . $this->$field . "' ";
+        $fieldsList = [];
+        foreach ($this->attributes as $field => $value) {
+            $fieldsList[] = " $field = '$value'";
         }
-        // . " title = '{$this->title}', "
-        // . " content = '{$this->content}', "
-        // . " news_date = '{$this->date}' "
-        $sql = "UPDATE " . self::$table  . " SET "
-            . $fields
-            . " where id = '{$this->id}' ";
-        var_dump($sql);
+        $fieldsList = implode(', ', $fieldsList);
+        $sql = "UPDATE {$this->table} SET $fieldsList WHERE id = {$this->id}";
         $this->db->exec($sql);
     }
     protected function insert()
     {
-        $sql = "INSERT INTO " . self::$table 
-            . " (`title`, `content`, `news_date`)"
-            . " VALUES ('{$this->title}', '{$this->content}', '{$this->date}')";
+        $fieldsList = implode(', ', array_keys($this->attributes));
+        $valuesList = '\'' . implode('\', \'', $this->attributes) . '\'';
+        $sql = "INSERT INTO {$this->table} ({$fieldsList}) VALUES ({$valuesList})";
         $this->db->exec($sql);
         $this->id = $this->db->lastInsertId();
     }
