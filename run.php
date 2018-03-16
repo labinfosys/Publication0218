@@ -16,7 +16,11 @@ use sk\Publications\Publication;
 $db = new PDO('mysql:host=localhost;dbname=php02', 'root', '');
 
 $news = News::get($db, 1);
-$news->title = $news->title . ' #1';
+
+var_dump($news);
+
+die();
+
 $news->save();
 $news->print();
 

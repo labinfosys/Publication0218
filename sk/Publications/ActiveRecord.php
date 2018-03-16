@@ -6,6 +6,7 @@ class ActiveRecord
     public $db;
     public $attributes;
     public $table;
+    static public $className;
 
     public function __construct($db) 
     {
@@ -26,7 +27,7 @@ class ActiveRecord
 
     static public function get($db, $id)
     {
-        $obj = new News($db);
+        $obj = new static::$className($db);
         $sql = "select * from " . $obj->table . " where id = $id";
         $result = [];
         foreach($db->query($sql, \PDO::FETCH_ASSOC) as $row) {
@@ -53,6 +54,7 @@ class ActiveRecord
             $fieldsList[] = " $field = '$value'";
         }
         $fieldsList = implode(', ', $fieldsList);
+        // UPDATE news SET title = 'Заголовок', content = 'Контент' WHERE id = 1
         $sql = "UPDATE {$this->table} SET $fieldsList WHERE id = {$this->id}";
         $this->db->exec($sql);
     }
@@ -60,6 +62,8 @@ class ActiveRecord
     {
         $fieldsList = implode(', ', array_keys($this->attributes));
         $valuesList = '\'' . implode('\', \'', $this->attributes) . '\'';
+        $valuesList = "'" . implode("', '", $this->attributes) . "'";
+        // INSERT INTO news (title, content) VALUES ('Заголовок', 'Контент')
         $sql = "INSERT INTO {$this->table} ({$fieldsList}) VALUES ({$valuesList})";
         $this->db->exec($sql);
         $this->id = $this->db->lastInsertId();

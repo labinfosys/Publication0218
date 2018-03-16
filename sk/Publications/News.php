@@ -5,6 +5,7 @@ class News extends ActiveRecord
 {
     static public $type = 'NEWS';
     public $table = 'news';
+    static public $className = 'sk\Publications\News';
 
     public function print()
     {
